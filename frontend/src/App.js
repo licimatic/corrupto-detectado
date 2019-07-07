@@ -45,18 +45,12 @@ function App() {
             width: '50%',
           }}
         >
-          <div>{tender.name}</div>
-          <div>{tender.company}</div>
-          <div>{tender.city}</div>
-          <div>{tender.value}</div>
           <div
             style={{
-              width: 70,
               color: riskColorMap[tender.riskState],
-              display: 'flex',
             }}
           >
-            {tender.risk} Riesgo
+            {tender.risk}% Riesgo
           </div>
           <div>
             {Object.entries(tender.discoveryTopics).map(
@@ -104,7 +98,7 @@ const Button = styled.button({
 });
 
 const Topic = ({ name, summary }) => {
-  const [selected, setSelected] = React.useState(false);
+  const [selected, setSelected] = React.useState(true);
 
   return (
     <div
@@ -146,12 +140,7 @@ const Topic = ({ name, summary }) => {
 };
 
 const tender = {
-  id: 3,
-  name: 'Alimentos para poblaciones vulnerables',
-  city: 'Bogotá D.C.',
-  company: 'Odebrecht',
-  risk: 95,
-  value: "19'500.000.000",
+  risk: 1,
 };
 
 tender.riskState = getRiskState(tender.risk);
