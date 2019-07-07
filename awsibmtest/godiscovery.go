@@ -5,9 +5,12 @@ import (
   "bufio"
   "fmt"
   "os"
+  "strings"
   "github.com/IBM/go-sdk-core/core"
   "github.com/watson-developer-cloud/go-sdk/discoveryv1"
 )
+
+
 
 func create_environment(){
   discovery, discoveryErr := discoveryv1.
@@ -106,7 +109,7 @@ func put_file_in_collection(document string)(string){
   if discoveryErr != nil {
     panic(discoveryErr)
   }
-  filetoprocess := fmt.Sprintf("./%s", document)
+  filetoprocess := fmt.Sprintf("%s", document)
   fmt.Println("opening ....", filetoprocess)
   file, fileErr := os.Open(filetoprocess)
     if fileErr != nil {
@@ -129,13 +132,21 @@ func put_file_in_collection(document string)(string){
   return string(b)
 }
 
+func analyze_document(id_document string)(string){
+	fmt.Println("Analyzing document....", id_document)
+	final_id := strings.Split(id_document, ":")[1][1:]
+	fmt.Println("final_id....", final_id)
+	return "¡¡analizis??"
+}
 
 func main(){
   fmt.Println("ingrese el nombre del documento a procesar...")
   input := bufio.NewScanner(os.Stdin)
   input.Scan()
-  fmt.Println(">> ", input.Text())
-  fmt.Println("Analizing document...")
+  fmt.Println("Uploading document... >> ", input.Text())
   var rpf = put_file_in_collection(input.Text())
-  fmt.Println(">> ", rpf)
+  fmt.Println("answer to the upload", rpf)
+  id_document := strings.Split(rpf, ",")[0]
+  fmt.Println("id doc upload", id_document)
+  analyze_document(id_document)
 }
